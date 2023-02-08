@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.diegomarques.helpdesk.domain.enums.Perfil;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
+@Entity
 public class Tecnico extends Pessoa{
 	private static final long serialVersionUID = 1L;
 
-	
+	@OneToMany(mappedBy = "tecnico") // Um Tecnico para Muitos Chamados - (mappedBy é o mapeamento que está na classe tecnico)
 	private List<Chamado> chamados = new ArrayList<>();
 	
 	public Tecnico() {

@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.diegomarques.helpdesk.domain.enums.Perfil;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
+@Entity
 public class Cliente extends Pessoa{
 	private static final long serialVersionUID = 1L;
 	
+	@OneToMany(mappedBy = "cliente")
 	private List<Chamado> chamados = new ArrayList<>(); //Iniciar o ArrayList para evitar ponteiro nulo
 
 	public Cliente() {

@@ -7,17 +7,38 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.com.diegomarques.helpdesk.domain.enums.Perfil;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.diegomarques.helpdesk.domain.enums.Perfil;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public abstract class Pessoa implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Geração ID Automatica
 	protected Integer id;
+	
 	protected String nome;
+	@Column(unique = true) // CPF unico no banco de dados
 	protected String cpf;
+	@Column(unique = true)
 	protected String email;
 	protected String senha;
+	
+	@ElementCollection(fetch = FetchType.EAGER) //Assegurar que essa lista virá Junto com o Usuário
+	@CollectionTable(name = "PERFIS") //nome no banco de dados
 	protected Set<Integer> perfis = new HashSet<>(); //instaciando a lista de Perfis
+	
+	@JsonFormat(pattern = "dd/MM/yyyy") //Formato da data
 	protected LocalDate dataCriacao = LocalDate.now(); // Momento atual da criação
 	
 	
