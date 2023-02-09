@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.diegomarques.helpdesk.domain.Tecnico;
+import br.com.diegomarques.helpdesk.domain.enums.Perfil;
 
 public class TecnicoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -78,12 +79,12 @@ public class TecnicoDTO implements Serializable{
 		this.senha = senha;
 	}
 
-	public Set<Integer> getPerfis() {
-		return perfis;
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
 
-	public void setPerfis(Set<Integer> perfis) {
-		this.perfis = perfis;
+	public void addPerfil(Perfil perfil) {
+		this.perfis.add(perfil.getCodigo());
 	}
 
 	public LocalDate getDataCriacao() {
