@@ -49,6 +49,14 @@ public class TecnicoService {
 		return tecnicoRepository.save(oldTecnico);
 	}
 	
+	public void delete(Integer id) {
+		Tecnico tecnico = findById(id);
+		if(tecnico.getChamados().size() > 0) {
+			throw new DataIntegrityViolationException("Não pode ser excluido, porque há chamados");
+		}
+		 tecnicoRepository.deleteById(id);
+	}
+	
 
 	private void validaPorCpfEEmail(@Valid TecnicoDTO tecnicoDTO) {
 		Optional<Pessoa> pessoa = pessoaRepository.findByCpf(tecnicoDTO.getCpf());
@@ -61,6 +69,8 @@ public class TecnicoService {
 			throw new DataIntegrityViolationException("E-MAIL já cadastrado no Sistema!");
 		}
 	}
+
+
 
 
 
